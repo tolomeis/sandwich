@@ -18,4 +18,5 @@ Sandwich is built over an old robotic kit named Axemblo, now it doesn't sell any
 All the parts are made in aluminum and held together by M3 screws. On the lower part, between the aluminum racks, is the battery, a 10.000 power bank from INUI capable of providing 3A of current. In the back is the custom board based on a Raspberry Pi PICO, which is connected to the Jetson Nano over UART.
 
 ## The software
-Currently, the robot runs with ROS melodic. A custom node reads the ```/cmd_vel``` topic, computes the velocity of every motor, and sends all the information to the Pico. A simple program written in C runs on the Pico, which receives the desired motor speed and drives the h-bridge using PWM.
+Currently, the robot runs with ROS melodic. A custom node reads the ```/cmd_vel``` topic, computes the velocity of every motor, and sends all the information to the Pico. A simple program written in C runs on the Pico, which receives the desired motor speed and drives the h-bridge using PWM. There is a web GUI, called Bacon, based on ```rosbridge_suite``` and the ```rosjs``` library; it is capabe of controlling the motors using a joystick, either on desktop or mobile devices. There is also support for a camera stream but it is not woring yet.
+![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/bacon.png)
