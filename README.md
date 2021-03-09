@@ -34,7 +34,11 @@ All the nodes required for the GUI are started via a single ```bacon.launch``` f
 ```
 
 ### Camera side
-The camera stream is achieved using a couple of nodes on the Jetson. First there is the ```video_source``` node from the ```ros_deep_learning``` package provided by NVIDIA. It acquires the camera and publish the raw images on the ```video_source/raw``` topic.  Then, the ```web_video_server``` node opens the stream on the ```11315``` port. On the web page the stream is loaded as an image, using the source url of the video stream provided by the video server. A simple javascript function which read the textbox containing the robot address and load the stream is called when pressed the "start camera" button
+The camera stream is achieved using a couple of nodes on the Jetson. First there is the ```video_source``` node from the ```ros_deep_learning``` package provided by NVIDIA. It acquires the camera and publish the raw images on the ```video_source/raw``` topic.  The ```web_video_server``` node, then, opens the stream on the ```11315``` port. On the GUI web page the stream is loaded as an image, using the url of the video stream provided by the server and the correct topic, that is something like
+```html
+ <img src="http://robot_address:11315/stream?topic=/video_source/raw&width=800&height=600&quality=50"/>
+```
+A simple javascript function which read the textbox containing the robot address and load the stream is called when pressed the "start camera" button
 ```javascript
 // load the camera stream as an image, with the right IP address (from the wp_address input box)
 //port 11315 and topic /video_source/raw are fixed.
