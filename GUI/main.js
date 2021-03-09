@@ -3,6 +3,7 @@ var app = new Vue({
     // storing the state of the page
     data: {
         connected: false,
+		cstarted: false,
         ros: null,
         ws_address: 'ws://192.168.1.203:9090',
         logs: [],
@@ -18,7 +19,6 @@ var app = new Vue({
                 this.connected = true
                 this.logs.unshift('Connected!')
                 // console.log('Connected!')
-				this.setCamera()
             })
             this.ros.on('error', (error) => {
                 this.logs.unshift('Error connecting to websocket server')
@@ -56,18 +56,6 @@ var app = new Vue({
             })
             this.setTopic()
             this.topic.publish(this.message)
-        },
-
-		setCamera: function() {
-            console.log('set camera method')
-            this.cameraViewer = new MJPEGCANVAS.Viewer({
-                divID: 'mjpeg',
-                host: '192.168.1.203',
-                width: 640,
-                height: 480,
-                topic: '/video_source/raw',
-                port: 11315,
-            })
         },
     },
 })
