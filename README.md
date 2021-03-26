@@ -1,6 +1,6 @@
 # Sandwich
 Sandwich is a small and versatile robot, powered by Jetson Nano and a Raspberry Pi PICO. It has 2 DC motors and a Raspberry Camera on the front.
-![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/building_2.jpg)
+![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/sandwich-full.jpg)
 - NVIDIA Jetson Nano
 -  Raspberry Pi Pico-based custom board
 - 10.000mAh power bank
