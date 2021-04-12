@@ -27,6 +27,7 @@ All the parts are made in aluminum and held together by M3 screws. On the lower 
 | Raspberry Pi PICO             | [Melopero.com](https://www.melopero.com/shop/raspberry-pi/boards/single-boards/raspberry-pi-pico/ "Melopero.com")       |
 | MicroSD card  64GB            | [Amazon.it](https://www.amazon.it/gp/product/B08GYBBBBH "Amazon.it") |
 | Noctua NF-A4x20 5V FAN		| [Amazon.it ](https://www.amazon.it/gp/product/B071FNHVXN "Amazon.it ")|
+
 ![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/schematic.png)
 
 
