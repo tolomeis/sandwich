@@ -16,7 +16,19 @@ Sandwich is a small and versatile robot, powered by Jetson Nano and a Raspberry 
 ## The hardware
 Sandwich is built over an old robotic kit named Axemblo, now it doesn't sell anymore, but it similar, at least on the idea, to the MakeBlock.
 All the parts are made in aluminum and held together by M3 screws. On the lower part, between the aluminum racks, is the battery, a 10.000 power bank from INUI capable of providing 3A of current. In the back is the custom board based on a Raspberry Pi PICO, which is connected to the Jetson Nano over UART. 
+| Component					    | Distributor|
+|-------------------------------|-----------|
+| Jetson NANO Developer Kit     | [Arrow](https://www.arrow.com/it-it/products/945-13450-0000-100/nvidia "Arrow")     |
+| Raspberry PI Camera           | [Amazon.it](https://www.amazon.it/gp/product/B01ER2SKFS "Amazon.it") |
+| Powerbank                     | [Amazon.it](https://www.amazon.it/gp/product/B07PNL5STG "Amazon.it") |
+| Wifi USB adapter              | [Amazon.it](https://www.amazon.it/gp/product/B07KRCW6LZ "Amazon.it") |
+| Pololu MicroGear Motors (2x)  | [Pololu.com ](https://www.pololu.com/product/3077 "Pololu.com ")      |
+| Motor Driver TB6612FNG module | [Pololu.com](https://www.pololu.com/product/713 "Pololu.com")       |
+| Raspberry Pi PICO             | [Melopero.com](https://www.melopero.com/shop/raspberry-pi/boards/single-boards/raspberry-pi-pico/ "Melopero.com")       |
+| MicroSD card  64GB            | [Amazon.it](https://www.amazon.it/gp/product/B08GYBBBBH "Amazon.it") |
+| Noctua NF-A4x20 5V FAN		| [Amazon.it ](https://www.amazon.it/gp/product/B071FNHVXN "Amazon.it ")|
 ![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/schematic.png)
+
 
 ## The software
 Currently, the robot runs with ROS melodic. A custom node reads the ```/cmd_vel``` topic, computes the velocity of every motor, and sends all the information to the Pico. A simple program written in C runs on the Pico, which receives the desired motor speed and drives the h-bridge using PWM. There is a web GUI, called Bacon, based on ```rosbridge_suite``` and the ```rosjs``` library; it is capabe of controlling the robot using a joystick and visualizing the camera stream; either on desktop or mobile devices. 
