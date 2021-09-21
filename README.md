@@ -66,6 +66,5 @@ loadCamera = function(){
 
 
 ### Motor control side
-TODO
-
+To control the motors, Bacon uses ```rosjs```  library together with a ```nipple.js``` script. The joystick is based on a tutorial from "msadowski" [that you can find here](https://msadowski.github.io/ros-web-tutorial-pt1/ "here"). The webpage make also use of Vue js to better link evey action to the html elements. 
 
