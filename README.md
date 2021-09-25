@@ -55,7 +55,7 @@ loadCamera = function(){
  document.getElementById('cam').innerHTML = '<img src="http://' + app.ws_address.slice(5,-5) + ':11315/stream?topic=/video_source/raw&width=800&height=600&quality=50" class="w3-image"/>';
  app.cstarted = true; //"started" flag for change the button appereance
 }
-``` -->
+
 
 
 
