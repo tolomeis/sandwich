@@ -6,15 +6,18 @@ Sandwich is a small and versatile robot, powered by Jetson Nano and a Raspberry 
 - 10.000mAh power bank
 - Raspberry Camera v2.1 for autonomous driving
 - 2x Pololu Micro gear motors
-- Pololu TB6612FNG Motor driver
+ 
 
- 
- Future upgrades:
- - Sharp IR distance sensor
- - IMU
- 
+## What can it do?
+Sandwich can operate autonomously in different modes. At any time, a custom web-based GUI named (of course) Bacon is always continuously hosted on the robot and can be used to monitor the camera and control the robot.
+- ### Obstacle Avoidance:
+  Sandwich uses a fully connected network, resnet18, trained on the SUN RGB-D dataset (the model is provided by the jetson-inference package) to avoid obstacles. The network runs on the NVIDIA Jetson Nano’s GPU and performs a pixel-level classification of the image (semantic segmentation). The pixels classified as “floor” are considered free and thus safe space. A custom node reads the output of the network, and by computing the centroid of the floor pixels, which is used as a reference direction, and the total forward clearance, used as an indication of the front obstacle’s distance, can compute linear and angular velocity to avoid obstacles.
+- ### Apriltag Pose Control:
+  In this mode, Sandwich runs the AprilTag Detection Algorithm to detect and compute the pose of a printed tag. Once acquired, the tag position and orientation are used to set a navigation goal, which will be followed by the robot using a custom Lyapunov control. Basically, it tries to arrive in front of the tag in a perpendicular direction.
+- ### Beer follower:
+  Sandwich uses a fine-tuned DetectNet-COCO-Bottle network to detect beer bottles and follow them. It’s a simple script that uses the angular and linear velocity to center and regulates the size of a bottle in the image acquired by the camera.
 ## The hardware
-Sandwich is built over an old robotic kit named Axemblo, now it doesn't sell anymore, but it similar, at least on the idea, to the MakeBlock.
+Sandwich is built over an old robotic kit named Axemblo, now it isn't for sale anymore, but it similar, at least on the idea, to the MakeBlock.
 All the parts are made in aluminum and held together by M3 screws. On the lower part, between the aluminum racks, is the battery, a 10.000 power bank from INUI capable of providing 3A of current. In the back is the custom board based on a Raspberry Pi PICO, which is connected to the Jetson Nano over UART. 
 | Component					    | Distributor|
 |-------------------------------|-----------|
@@ -31,21 +34,12 @@ All the parts are made in aluminum and held together by M3 screws. On the lower 
 ![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/schematic.png)
 
 
-## The software
-Currently, the robot runs with ROS melodic. A custom node reads the ```/cmd_vel``` topic, computes the velocity of every motor, and sends all the information to the Pico. A simple program written in C runs on the Pico, which receives the desired motor speed and drives the h-bridge using PWM. There is a web GUI, called Bacon, based on ```rosbridge_suite``` and the ```rosjs``` library; it is capabe of controlling the robot using a joystick and visualizing the camera stream; either on desktop or mobile devices. 
-![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/bacon.png)
 
-All the nodes required for the GUI are started via a single ```bacon.launch``` file, which is indipendent fron the main nodes and launch files.
-#### bacon.launch
-```xml
-<launch>
-	<node pkg="web_video_server" type="web_video_server" name="web_video_server" output="screen">
-		<param name="quality" value="50"/>
-		<param name="port" value="11315"/>
-	</node>
-	<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch"/>
-</launch>
-```
+
+
+## Basically, how does it work:
+Currently, the robot runs with ROS melodic. A custom node reads the ```/cmd_vel``` topic, computes the velocity of every motor, and sends all the information to the Pico. A simple program written in C runs on the Pico, which receives the desired motor speed and drives the h-bridge using PWM. The web GUI is based on ```rosbridge_suite``` and the ```rosjs``` library; it is capabe of controlling the robot using a joystick and visualizing the camera stream; either on desktop or mobile devices. 
+![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/bacon.png)
 
 ### Camera side
 The camera stream is achieved using a couple of nodes on the Jetson. First there is the ```video_source``` node from the ```ros_deep_learning``` package provided by NVIDIA. It acquires the camera and publish the raw images on the ```video_source/raw``` topic.  The ```web_video_server``` node, then, opens the stream on the ```11315``` port. On the GUI web page the stream is loaded as an image, using the url of the video stream provided by the server and the correct topic, that is something like
@@ -61,7 +55,7 @@ loadCamera = function(){
  document.getElementById('cam').innerHTML = '<img src="http://' + app.ws_address.slice(5,-5) + ':11315/stream?topic=/video_source/raw&width=800&height=600&quality=50" class="w3-image"/>';
  app.cstarted = true; //"started" flag for change the button appereance
 }
-```
+``` -->
 
 
 
