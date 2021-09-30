@@ -16,6 +16,18 @@ Sandwich can operate autonomously in different modes. At any time, a custom web-
   In this mode, Sandwich runs the AprilTag Detection Algorithm to detect and compute the pose of a printed tag. Once acquired, the tag position and orientation are used to set a navigation goal, which will be followed by the robot using a custom Lyapunov control. Basically, it tries to arrive in front of the tag in a perpendicular direction.
 - ### Beer follower:
   Sandwich uses a fine-tuned DetectNet-COCO-Bottle network to detect beer bottles and follow them. It’s a simple script that uses the angular and linear velocity to center and regulates the size of a bottle in the image acquired by the camera.
+## Code organization:
+### ``` sandwich_ws```  
+This is the main workspace, the code is splitted in three different packages:
+ - ### sandwich
+    is the main package that contains the motor control node, URDF file and launch files to configure the camera stream.
+  - ### sandwich_remote
+    contains the webpage that runs Bacon, a script and a roslaunch file to bring up the web server.
+  - ### sandwich_autonomous
+    contains all the nodes that give sandwich autonomous capability. The apriltag pose control, the obstacle avoidance and the beer follower, along with the roslaunch file needed.
+### ``` uartCtrl```  
+This is the Raspberry PI Pico code. It uses the UART library and listens for messages from the node running on the Jetson. The character 's' is used as a start flag, and the velocity for each motor is encoded as a signed ``` int8```. The Pico only listens, except when it recieves message that doesn't start with the start character. In this case the Pico send back a warn message that will be logged as a warning in the ROS console.
+  
 ## The hardware
 Sandwich is built over an old robotic kit named Axemblo, now it isn't for sale anymore, but it similar, at least on the idea, to the MakeBlock.
 All the parts are made in aluminum and held together by M3 screws. On the lower part, between the aluminum racks, is the battery, a 10.000 power bank from INUI capable of providing 3A of current. In the back is the custom board based on a Raspberry Pi PICO, which is connected to the Jetson Nano over UART. 
@@ -55,10 +67,9 @@ loadCamera = function(){
  document.getElementById('cam').innerHTML = '<img src="http://' + app.ws_address.slice(5,-5) + ':11315/stream?topic=/video_source/raw&width=800&height=600&quality=50" class="w3-image"/>';
  app.cstarted = true; //"started" flag for change the button appereance
 }
-
+```
 
 
 
 ### Motor control side
-To control the motors, Bacon uses ```rosjs```  library together with a ```nipple.js``` script. The joystick is based on a tutorial from "msadowski" [that you can find here](https://msadowski.github.io/ros-web-tutorial-pt1/ "here"). The webpage make also use of Vue js to better link evey action to the html elements. 
-
+To control the motors, Bacon uses ```rosjs```  library together with a ```nipple.js``` script. The joystick is based on a tutorial from "msadowski" [that you can find here](https://msadowski.github.io/ros-web-tutorial-pt1/ "here"). The webpage make also use of Vue js to better link evey action to the html elements.
