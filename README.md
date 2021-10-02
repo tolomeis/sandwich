@@ -13,8 +13,8 @@ Sandwich can operate autonomously in different modes. At any time, a custom web-
 - ### Obstacle Avoidance:
   Sandwich uses a fully connected network, resnet18, trained on the SUN RGB-D dataset (the model is provided by the jetson-inference package) to avoid obstacles. The network runs on the NVIDIA Jetson Nano’s GPU and performs a pixel-level classification of the image (semantic segmentation). The pixels classified as “floor” are considered free and thus safe space. A custom node reads the output of the network, and by computing the centroid of the floor pixels, which is used as a reference direction, and the total forward clearance, used as an indication of the front obstacle’s distance, can compute linear and angular velocity to avoid obstacles.
 - ### Apriltag Pose Control:
-  In this mode, Sandwich runs the AprilTag Detection Algorithm to detect and compute the pose of a printed tag. Once acquired, the tag position and orientation are used to set a navigation goal, which will be followed by the robot using a custom Lyapunov control. Basically, it tries to arrive in front of the tag in a perpendicular direction.
-  ![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/gifsapriltag_follow.gif)
+  In this mode, Sandwich runs the AprilTag Detection Algorithm to detect and compute the pose of a printed tag. Once acquired, the tag position and orientation are used to set a navigation goal, which will be followed by the robot using a custom Lyapunov control. Basically, it tries to arrive in front of the tag in a perpendicular direction to the tag itself.
+  ![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/gifs/apriltag_follow.gif)
 - ### Beer follower:
   Sandwich uses a fine-tuned DetectNet-COCO-Bottle network to detect beer bottles and follow them. It’s a simple script that uses the angular and linear velocity to center and regulates the size of a bottle in the image acquired by the camera.
 ## Code organization:
