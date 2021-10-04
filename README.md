@@ -16,7 +16,7 @@ Sandwich can operate autonomously in different modes. At any time, a custom web-
   In this mode, Sandwich runs the AprilTag Detection Algorithm to detect and compute the pose of a printed tag. Once acquired, the tag position and orientation are used to set a navigation goal, which will be followed by the robot using a custom Lyapunov control. Basically, it tries to arrive in front of the tag in a perpendicular direction to the tag itself.
   ![](https://raw.githubusercontent.com/tolomeis/sandwich/main/imgs/gifs/apriltag_follow.gif)
 - ### Beer follower:
-  Sandwich uses a fine-tuned DetectNet-COCO-Bottle network to detect beer bottles and follow them. It’s a simple script that uses the angular and linear velocity to center and regulates the size of a bottle in the image acquired by the camera.
+  Sandwich uses a fine-tuned DetectNet-COCO-Bottle network to detect beer bottles (actually any type of bottle can work) and follow them. It’s a simple script that uses the angular and linear velocity to center and regulates the size of a bottle in the image acquired by the camera.
 ## Code organization:
 ### ``` sandwich_ws```  
 This is the main workspace, the code is splitted in three different packages:
